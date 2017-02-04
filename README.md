@@ -16,7 +16,8 @@ You must write your pug code in bemto.
 More information from bemto: https://github.com/kizu/bemto
 
 Download it, then include main "bemto.pug" file to all your pug files (like mixins):
-include ../../../plugins/bemto/bemto
+
+    include ../../../plugins/bemto/bemto
 
 
 ## How its work?
@@ -95,8 +96,6 @@ I think about mixins dictionary, to auto-paste mixins, like:
 			//
 		&__link
 			+link()
-				//
-			&:hover
 				//
 
 This function named as "autoMixins" in plugin code, and commented now.
