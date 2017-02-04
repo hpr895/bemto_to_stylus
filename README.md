@@ -17,7 +17,7 @@ More information from bemto: https://github.com/kizu/bemto
 
 Download it, then include main "bemto.pug" file to all your pug files (like mixins):
 
-    include ../../../plugins/bemto/bemto
+	include ../../../plugins/bemto/bemto
 
 
 ## How its work?
