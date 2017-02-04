@@ -96,7 +96,5 @@ I think about mixins dictionary, to auto-paste mixins, like:
 		&__link
 			+link()
 				//
-			&:hover
-				//
 
 This function named as "autoMixins" in plugin code, and commented now.
