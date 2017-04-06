@@ -364,57 +364,29 @@ class bemto_to_stylusCommand(sublime_plugin.TextCommand):
 			return new_array
 
 
-		# Скрываем символ возврата каретки, и удаляем лишнюю первую строку
-		def autoMixins(array):
+		# Автоматически добавляем стили (работает только для элементов на 2 табах)
+		def autoInsert(array):
 			dictArray = {
-				'link' : {
-					'mixin': '+link()',
-					'type': 'block',
-				},
-				'left' : {
-					'mixin': 'dib(50%)',
-					'type': 'line',
-				},
-				'right' : {
-					'mixin': 'dib(50%)',
-					'type': 'line',
-				},
+				'link' :  {'value': '+link()\n\t\t\t\n\t\t&:hover\n\t\t\t'},
+				'left' :  {'value': 'dib(50%)\n\t\t'},
+				'right' : {'value': 'dib(50%, 1)\n\t\t'},
+				'title' : {'value': 'margin 0\n\t\tfont-size 20px\n\t\tfont-weight normal'},
+				'row' :   {'value': 'cf()'},
+				'photo' : {'value': 'fit(200px)'},
+				'mask' : {'value': 'link-mask()'},
 			}
 			new_array = []
 			for line in array:
 				new_array.append(line)
-
-				# Считаем количество табов
-				line_tabs_count = line.count('\t')
-
-				# Достаём класс
+				# Достаём слово
 				reg_word = re.compile(r".+&__|\.|\r")
 				word = re.sub(reg_word, '', line)
-
-				# Добавляем миксин, если класс есть в словаре
+				# Добавляем миксин, если слово есть в словаре
 				if re.match('\w', word):
 					if word in dictArray:
-						tabs_prefix = '\t'
-						while line_tabs_count > 0:
-							tabs_prefix += '\t'
-							line_tabs_count = line_tabs_count - 1
-						mixin_line = tabs_prefix + dictArray[word]['mixin']
+						mixin_line = '\t\t' + dictArray[word]['value']
 						new_array.append(mixin_line)
-
-						if dictArray[word]['type'] == 'block':
-							new_array.append(tabs_prefix + '\t')
-						else:
-							new_array.append(tabs_prefix)
-
 			return new_array
-
-
-
-
-
-
-
-
 
 
 		# Скрываем символ возврата каретки, и удаляем лишнюю первую строку
@@ -461,7 +433,7 @@ class bemto_to_stylusCommand(sublime_plugin.TextCommand):
 
 				fin = convertToStylus(fin)
 
-				# fin = autoMixins(fin)
+				fin = autoInsert(fin)
 
 				fin = hideCaretReturn(fin)
 				sublime.status_message('Bemto to Jade: Conversion was successful')
